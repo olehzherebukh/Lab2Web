@@ -3,14 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>Scorpions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
     <header id="main-header" class="header-main">
-      <div class="menu_nav">
-        <img src="Scorpions_Logo1.jpg" alt="logo of website" id="logo_picture">
-        <nav class="nav-main">
-          <ul class="nav-main-ul">
+        <nav class="navbar navbar-expand-md navbar-dark justify-content-center">
+          <img src="Scorpions_Logo1.jpg" alt="logo of website" id="logo_picture">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
             <li class="nav-main-item">
               <a href="main.html">Main</a>
             </li>
@@ -34,25 +41,62 @@
             <li class="nav-main-item">
               <a href="#">Admin</a>
             </li>
+          </ul>
+          </div>
         </nav>
-      </div>
     </header>
     <main>
-      <div class="photo-band">
+      <div class="row">
+        <div class="container">
+          <div class="row">
+      <div class="col-md-12 photo-band">
         <img src="ScorpionsBand.jpg" alt="Scorpions Band">
       </div>
-    <div class="band_info">
+      </div>
+      </div>
+      </div>
+      <div class="row">
+        <div class="container">
+          <div class="row">
+    <div class="col-md-12 band_info_h">
       <h2>History</h2>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 band_info">
       <p><b>Scorpions</b> are a German rock band formed in 1965 in Hanover by Rudolf Schenker.
          Since the band's inception, its musical style has ranged from hard rock to heavy metal The lineup from 1978 to 1992 was the most successful incarnation of the group, and included Klaus Meine (vocals), Rudolf Schenker (rhythm guitar), Matthias Jabs (lead guitar), Francis Buchholz (bass), and Herman Rarebell (drums). The band's only continuous member has been Schenker, although Meine has appeared on all of Scorpions' studio albums, while Jabs has been a consistent member since 1979, and bassist Paweł Mąciwoda and drummer Mikkey Dee have been in the band since 2003 and 2016 respectively.</p>
     </div>
-    <div class="album-photo">
+  </div>
+</div>
+</div>
+<div class="row">
+  <div class="container">
+    <div class="row">
+    <div class="col-md-12 album-photo">
       <h2>Best Album</h2>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="row">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 album-photo">
       <img src="ReturnToForever.jpg" alt="best albums photo">
     </div>
+</div>
+</div>
+</div>
+</div>
+
     </main>
-    <footer>
-      <div class="copyright">
+    <footer class="py-4 text-white-50">
+      <div class="container text-center copyright">
         <p>©2019 All rights reserved</p>
       </div>
     </footer>
