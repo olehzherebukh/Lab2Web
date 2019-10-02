@@ -3,14 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>Scorpions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
     <header id="main-header" class="header-main">
-      <div class="menu_nav">
-        <img src="Scorpions_Logo1.jpg" alt="logo of website" id="logo_picture">
-        <nav class="nav-main">
-          <ul class="nav-main-ul">
+        <nav class="navbar navbar-expand-lg navbar-dark justify-content-center">
+          <img src="Scorpions_Logo1.jpg" alt="logo of website" id="logo_picture">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav center-nav">
             <li class="nav-main-item">
               <a href="main.html">Main</a>
             </li>
@@ -21,72 +28,81 @@
               <a href="#">For fans</a>
               <div class="submenu">
                     <a href="#">Fan club</a>
-                    <a href="#">Tour schedule</a>
+                    <a href="tourschedule.html">Tour schedule</a>
                     <a href="#">Lyrics</a>
               </div>
             </li>
             <li class="nav-main-item">
-              <a href="#">Fans appeal</a>
+              <a href="fansappeal.html">Fans appeal</a>
             </li>
             <li class="nav-main-item">
-              <a href="#">Concert Venue</a>
+              <a href="concertvenue.html">Concert Venue</a>
             </li>
             <li class="nav-main-item">
-              <a href="#">Admin</a>
+              <a href="admin.html">Admin</a>
             </li>
+          </ul>
+          </div>
         </nav>
-      </div>
     </header>
     <main>
-        <div class="news-container">
-          <div class="single-news">
-            <img src="news_picture.jpg" alt="Scorpions Band">
-            <h3>New Concert is approaching!</h3>
-            <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
-               Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
-                the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
-          </div>
-          <div class="single-news">
-            <img src="news_picture.jpg" alt="Scorpions Band">
-            <h3>New Concert is approaching!</h3>
-            <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
-               Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
-                the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
-          </div>
-          <div class="single-news">
-            <img src="news_picture.jpg" alt="Scorpions Band">
-            <h3>New Concert is approaching!</h3>
-            <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
-               Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
-                the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
+        <div class="row">
+          <div class="container">
+            <div class="row news-container">
+              <div class="col-md-4 single-news">
+                <img src="news_picture.jpg" alt="Scorpions Band">
+                <h3>New Concert is approaching!</h3>
+                <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
+                   Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
+                    the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
+              </div>
+              <div class="col-md-4 single-news">
+                <img src="news_picture.jpg" alt="Scorpions Band">
+                <h3>New Concert is approaching!</h3>
+                <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
+                   Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
+                    the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
+              </div>
+              <div class="col-md-4 single-news">
+                <img src="news_picture.jpg" alt="Scorpions Band">
+                <h3>New Concert is approaching!</h3>
+                <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
+                   Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
+                    the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="news-container">
-          <div class="single-news">
-            <img src="news_picture.jpg" alt="Scorpions Band">
-            <h3>New Concert is approaching!</h3>
-            <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
-               Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
-                the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
-          </div>
-          <div class="single-news">
-            <img src="news_picture.jpg" alt="Scorpions Band">
-            <h3>New Concert is approaching!</h3>
-            <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
-               Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
-                the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
-          </div>
-          <div class="single-news">
-            <img src="news_picture.jpg" alt="Scorpions Band">
-            <h3>New Concert is approaching!</h3>
-            <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
-               Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
-                the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
+        <div class="row">
+          <div class="container">
+            <div class="row news-container">
+              <div class="col-md-4 single-news">
+                <img src="news_picture.jpg" alt="Scorpions Band">
+                <h3>New Concert is approaching!</h3>
+                <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
+                   Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
+                    the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
+              </div>
+              <div class="col-md-4 single-news">
+                <img src="news_picture.jpg" alt="Scorpions Band">
+                <h3>New Concert is approaching!</h3>
+                <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
+                   Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
+                    the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
+              </div>
+              <div class="col-md-4 single-news">
+                <img src="news_picture.jpg" alt="Scorpions Band">
+                <h3>New Concert is approaching!</h3>
+                <p>Scorpions brought Bloodstock Open Air 2019 to an emphatic close on Sunday night (11th August) with a triumphant career-spanning set.
+                   Their only UK show of the year – and first gig on these shores since they headlined Stone Free Festival in June 2018 –
+                    the German hard rock icons treated the Catton Park faithful to an epic set that opened with 2015 track ‘Going Out with a Bang’ and culminated with their timeless classic ‘Rock You Like a Hurricane’.</p>
+              </div>
+            </div>
           </div>
         </div>
     </main>
-    <footer>
-      <div class="copyright">
+    <footer class="py-4 text-white-50">
+      <div class="container text-center copyright">
         <p>©2019 All rights reserved</p>
       </div>
     </footer>
