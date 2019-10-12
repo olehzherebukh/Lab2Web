@@ -200,6 +200,11 @@ footer {
   margin-top: 10px;
 }
 
+.single-news img {
+  text-align: center;
+  width:100%;
+}
+
 .news-container {
   display: flex;
   margin-top: 20px;
@@ -215,13 +220,6 @@ footer {
 .row{
     margin-left: 0;
     margin-right: 0;
-}
-
-.container{
-    .row{
-        margin-left: -15px;
-        margin-right: -15px;
-    }
 }
 
 div#collapsibleNavbar.navbar-collapse.collapse {
@@ -337,6 +335,34 @@ table, th, td {
 }
 
 .admin-footer {
-  position: absolute;
   bottom: 0;
+  position: fixed;
+}
+
+.internet-av {
+  text-align: center;
+  margin-top: 150px;
+  margin-bottom: 50px;
+}
+
+.get-main {
+  text-align: center;
+}
+
+.get-main a {
+  width: 50%;
+  height: 40px;
+  border: black;
+  font-size: large;
+  color: white;
+  background-color: #BC0000;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 30px;
+  text-decoration: none;
+  animation-name: none;
+}
+
+.get-main a:hover {
+  background-color: #c43e00;
 }
