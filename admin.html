@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" manifest = “cache.manifest”>
-  <head>
+<html lang="en" dir="ltr" manifest=“cache.manifest”>
+<head>
     <meta charset="utf-8">
     <title>Scorpions</title>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.css">
@@ -8,74 +8,153 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body>
-    <header id="main-header" class="header-main">
-        <nav class="navbar navbar-expand-lg navbar-dark justify-content-center">
-          <img src="images/Scorpions_Logo1.jpg" alt="logo of website" id="logo_picture">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="collapsibleNavbar">
-          <ul class="navbar-nav center-nav">
-            <li class="nav-main-item">
-              <a href="main.html">Main</a>
-            </li>
-            <li class="nav-main-item">
-              <a href="news.html">News</a>
-            </li>
-            <li class="nav-main-item" id="for-fans-drop-down">
-              <a href="#">For fans</a>
-              <div class="submenu">
-                    <a href="#">Fan club</a>
-                    <a href="tourschedule.html">Tour schedule</a>
-                    <a href="#">Lyrics</a>
-              </div>
-            </li>
-            <li class="nav-main-item">
-              <a href="fansappeal.html">Fans appeal</a>
-            </li>
-            <li class="nav-main-item">
-              <a href="concertvenue.html">Concert Venue</a>
-            </li>
-            <li class="nav-main-item">
-              <a href="admin.html">Admin</a>
-            </li>
-          </ul>
-          </div>
-        </nav>
-    </header>
-    <main>
-        <div class="row">
-          <div class="container">
-            <div class="row d-flex h-100">
-              <div class="col-md-6 admin-tools justify-content-center align-self-center">
-                <button type="button" name="button" class="add-button">Add image</button>
-              </div>
-              <div class="col-md-6 admin-tools">
-                  <img src="images/add_image.png" alt="add-image">
-              </div>
-            </div>
-          </div>
+</head>
+<body>
+<header id="main-header" class="header-main">
+    <nav class="navbar navbar-expand-lg navbar-dark justify-content-center">
+        <img src="images/Scorpions_Logo1.jpg" alt="logo of website" id="logo_picture">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav center-nav">
+                <li class="nav-main-item">
+                    <a href="main.html">Main</a>
+                </li>
+                <li class="nav-main-item">
+                    <a href="news.html">News</a>
+                </li>
+                <li class="nav-main-item" id="for-fans-drop-down">
+                    <a href="#">For fans</a>
+                    <div class="submenu">
+                        <a href="#">Fan club</a>
+                        <a href="tourschedule.html">Tour schedule</a>
+                        <a href="#">Lyrics</a>
+                    </div>
+                </li>
+                <li class="nav-main-item">
+                    <a href="fansappeal.html">Fans appeal</a>
+                </li>
+                <li class="nav-main-item">
+                    <a href="concertvenue.html">Concert Venue</a>
+                </li>
+                <li class="nav-main-item">
+                    <a href="admin.html">Admin</a>
+                </li>
+            </ul>
         </div>
-        <div class="row">
-          <div class="container">
-            <div class="row d-flex h-100">
-              <div class="col-md-6 admin-tools justify-content-center align-self-center">
-                <button type="button" name="button" class="add-button">Send</button>
-              </div>
-              <div class="col-md-6 admin-tools">
-                  <input type="text" name="title-input" placeholder="News title" class="title-input">
-                  <input type="text" name="title-input" placeholder="News body" class="body-input">
-              </div>
+    </nav>
+</header>
+<main>
+    <div class="row write-review">
+        <div class="container">
+            <div class="row d-flex h-100 send-button-row">
+                <div class="col-md-6 admin-tools justify-content-center align-self-center">
+                    <input type='file' class="inputfile" id="file"/>
+                    <label for="file">Add image</label>
+                </div>
+                <div class="col-md-6 admin-tools" id="add-image">
+                    <img id="myImg" src="#" alt="your image" height=50% width=50%>
+                    <img src="images/add_image.png" alt="add-image" id="old-image">
+                </div>
             </div>
-          </div>
         </div>
-    </main>
-    <footer class="py-4 text-white-50 admin-footer">
-      <div class="container text-center copyright">
+    </div>
+    <div class="row write-review">
+        <div class="container">
+            <div class="row d-flex h-100 send-button-row">
+                <div class="col-md-6 admin-tools justify-content-center align-self-center">
+                    <button type="button" name="button" class="add-button" onclick="checking()">Send</button>
+                </div>
+                <div class="col-md-6 admin-tools">
+                    <input type="text" name="title-input" placeholder="News title" class="title-input" id="title-input">
+                    <input type="text" name="title-input" placeholder="News body" class="body-input" id="body-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="py-4 text-white-50 admin-footer">
+    <div class="container text-center copyright">
         <p>©2019 All rights reserved</p>
-      </div>
-    </footer>
-  </body>
+    </div>
+</footer>
+<script type="text/javascript">
+    if (document.getElementById("myImg") != null) {
+        document.getElementById("myImg").remove();
+    }
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            if (document.getElementById("myImg") != null) {
+                document.getElementById("myImg").remove();
+            }
+            let new_image = document.createElement("img");
+            new_image.setAttribute("id", "myImg");
+            new_image.setAttribute("src", "#");
+            new_image.setAttribute("height", "50%");
+            new_image.setAttribute("width", "50%");
+            let addimg = document.getElementById("add-image");
+            if (document.getElementById("old-image") != null) {
+                document.getElementById("old-image").remove();
+            }
+            addimg.appendChild(new_image);
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+
+
+        document.getElementById("myImg").value = "set";
+
+    });
+
+    function imageIsLoaded(e) {
+        $('#myImg').attr('src', e.target.result);
+        $('#yourImage').attr('src', e.target.result);
+    }
+
+    function checking() {
+        if (document.getElementById("myImg") != null) {
+            if (document.getElementById("myImg").value === undefined) {
+                alert("Ви не додали зображення!");
+                return;
+            }
+        }
+
+        if (document.getElementById("myImg") === null) {
+            alert("Ви не додали зображення!");
+            return;
+        }
+
+
+        if (document.getElementById("title-input").value === "") {
+            alert("Ви не написали заголовок!");
+            return;
+        }
+
+        if (document.getElementById("body-input").value === "") {
+            alert("Ви не написали опис новини!");
+            return;
+        }
+
+        removeContent();
+        alert("Вашу новину додано!");
+    }
+
+    function removeContent() {
+        if (document.getElementById("myImg") != null) {
+            document.getElementById("myImg").remove();
+        }
+
+        let old_image = document.createElement("img");
+        old_image.setAttribute("id", "old-image");
+        old_image.setAttribute("src", "images/add_image.png");
+        let addimg = document.getElementById("add-image");
+        addimg.appendChild(old_image);
+
+        document.getElementById("title-input").value = "";
+        document.getElementById("body-input").value = "";
+    }
+</script>
+</body>
 </html>
