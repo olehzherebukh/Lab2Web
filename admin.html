@@ -64,7 +64,7 @@
         <div class="container">
             <div class="row d-flex h-100 send-button-row">
                 <div class="col-md-6 admin-tools justify-content-center align-self-center">
-                    <button type="button" name="button" class="add-button" onclick="checking()">Send</button>
+                    <button type="button" name="button" class="add-button" onclick="localSt()">Send</button>
                 </div>
                 <div class="col-md-6 admin-tools">
                     <input type="text" name="title-input" placeholder="News title" class="title-input" id="title-input">
@@ -79,82 +79,6 @@
         <p>©2019 All rights reserved</p>
     </div>
 </footer>
-<script type="text/javascript">
-    if (document.getElementById("myImg") != null) {
-        document.getElementById("myImg").remove();
-    }
-    $(":file").change(function () {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            if (document.getElementById("myImg") != null) {
-                document.getElementById("myImg").remove();
-            }
-            let new_image = document.createElement("img");
-            new_image.setAttribute("id", "myImg");
-            new_image.setAttribute("src", "#");
-            new_image.setAttribute("height", "50%");
-            new_image.setAttribute("width", "50%");
-            let addimg = document.getElementById("add-image");
-            if (document.getElementById("old-image") != null) {
-                document.getElementById("old-image").remove();
-            }
-            addimg.appendChild(new_image);
-            reader.onload = imageIsLoaded;
-            reader.readAsDataURL(this.files[0]);
-        }
-
-
-        document.getElementById("myImg").value = "set";
-
-    });
-
-    function imageIsLoaded(e) {
-        $('#myImg').attr('src', e.target.result);
-        $('#yourImage').attr('src', e.target.result);
-    }
-
-    function checking() {
-        if (document.getElementById("myImg") != null) {
-            if (document.getElementById("myImg").value === undefined) {
-                alert("Ви не додали зображення!");
-                return;
-            }
-        }
-
-        if (document.getElementById("myImg") === null) {
-            alert("Ви не додали зображення!");
-            return;
-        }
-
-
-        if (document.getElementById("title-input").value === "") {
-            alert("Ви не написали заголовок!");
-            return;
-        }
-
-        if (document.getElementById("body-input").value === "") {
-            alert("Ви не написали опис новини!");
-            return;
-        }
-
-        removeContent();
-        alert("Вашу новину додано!");
-    }
-
-    function removeContent() {
-        if (document.getElementById("myImg") != null) {
-            document.getElementById("myImg").remove();
-        }
-
-        let old_image = document.createElement("img");
-        old_image.setAttribute("id", "old-image");
-        old_image.setAttribute("src", "images/add_image.png");
-        let addimg = document.getElementById("add-image");
-        addimg.appendChild(old_image);
-
-        document.getElementById("title-input").value = "";
-        document.getElementById("body-input").value = "";
-    }
-</script>
+<script src="js/admin.js" type="text/javascript"></script>
 </body>
 </html>
