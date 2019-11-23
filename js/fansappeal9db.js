@@ -1,24 +1,36 @@
 document.addEventListener("DOMContentLoaded", openIndexedDB, false);
 
-window.addEventListener('offline', function (event) {
+const DOMAIN = 'http://localhost:3000/';
+
+window.addEventListener('online', function (event) {
     data_context.get_lists(function (result) {
         listsArr = result;
+        console.log(listsArr);
+
         if (listsArr != undefined) {
-            let len = listsArr.length;
+            if (useLocalStorage == true) {
+                let len = listsArr.length;
+                for (let i = 0; i < len; i++) {
+                    let info_obj = localStorage.getItem('appeal_info' + i);
+                    let info_array = JSON.parse(info_obj);
 
-            for (let i = 0; i < len; i++) {
-                let info_obj = localStorage.getItem('appeal_info' + i);
-                let info_array = JSON.parse(info_obj);
+                    let result = [];
 
-                let result = [];
-
-                for (let i in info_array)
-                    result.push([info_array [i]]);
+                    for (let i in info_array)
+                        result.push(info_array [i]);
+                    let fansAppeal = new FansAppeal(result[2], result[0], result[1]);
+                    sendToServer('fansappeal', fansAppeal);
+                    addSingleElement2(fansAppeal);
+                }
+                localStorage.clear();
+            } else {
+                let fansAppeal = new FansAppeal(result[2], result[0], result[1]);
+                sendToServer('fansappeal', fansAppeal);
+                addSingleElement2(fansAppeal);
             }
         }
 
     });
-    //sendToServer();
 });
 
 let db;
@@ -56,7 +68,8 @@ function localSt() {
         return;
     } else {
         if (isOnline()) {
-            sendToServer();
+            sendToServer('fansappeal', readInfo());
+            addSingleElement2(readInfo());
             removeText();
         } else {
             addToLocalStorage();
@@ -65,12 +78,22 @@ function localSt() {
     }
 }
 
+function readInfo() {
+    let today = new Date();
+    let time = today.getHours() + ":" + today.getMinutes();
+    let date = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear();
+    let input = document.getElementById("review-input").value;
+    let fansAppeal = new FansAppeal(input, date, time);
+    return fansAppeal;
+}
+
 function addToLocalStorage() {
     let today = new Date();
     let time = today.getHours() + ":" + today.getMinutes();
     let date = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear();
     let input = document.getElementById("review-input").value;
     let info_array = [time, date, input];
+    let fansAppeal = new FansAppeal(input, date, time);
     if (useLocalStorage == true) {
         data_context.get_lists(function (result) {
             listsArr = result;
@@ -87,7 +110,8 @@ function addToLocalStorage() {
 }
 
 function pageLoad() {
-
+    getFromServer('fansappeal',
+        appeals => appeals.map(addSingleElement2));
 }
 
 function addElementToPage(i) {
@@ -107,7 +131,7 @@ function addElementToPage(i) {
     }
 }
 
-function addSingleElement(review, time, date) {
+function addSingleElement2(appeal) {
     let div_row1 = document.createElement("div");
     div_row1.setAttribute("class", "row");
     div_row1.setAttribute("id", "row-appeal");
@@ -121,7 +145,7 @@ function addSingleElement(review, time, date) {
     col_md_second.setAttribute("class", "col-md-10");
 
     let paragraph_review = document.createElement("p");
-    let paragraph_r = document.createTextNode(review);
+    let paragraph_r = document.createTextNode(appeal.body);
     paragraph_review.appendChild(paragraph_r);
 
     let paragraph_author = document.createElement("p");
@@ -129,11 +153,11 @@ function addSingleElement(review, time, date) {
     paragraph_author.appendChild(paragraph_a);
 
     let paragraph_time = document.createElement("p");
-    let paragraph_t = document.createTextNode(time);
+    let paragraph_t = document.createTextNode(appeal.time);
     paragraph_time.appendChild(paragraph_t);
 
     let paragraph_date = document.createElement("p");
-    let paragraph_d = document.createTextNode(date);
+    let paragraph_d = document.createTextNode(appeal.date);
     paragraph_date.appendChild(paragraph_d);
 
     col_md_first.appendChild(paragraph_author);
@@ -152,8 +176,24 @@ function removeText() {
     document.getElementById("review-input").value = "";
 }
 
-function sendToServer() {
 
+function sendToServer(key, data, del = true) {
+    if (data.body) {
+        let req = new XMLHttpRequest();
+        req.open("POST", DOMAIN + key, true);
+        req.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        req.onreadystatechange = console.log;
+        req.send(JSON.stringify(data));
+    }
+    if (!del) return;
+}
+
+function getFromServer(key, callback) {
+    let req = new XMLHttpRequest();
+    req.responseType = 'json';
+    req.open('GET', DOMAIN + key, true);
+    req.onload = () => req.status === 200 ? callback(req.response) : console.log(req.response);
+    req.send(null);
 }
 
 var listsArr = [];
@@ -177,7 +217,7 @@ function init() {
     });
 }
 
-var useLocalStorage = false;
+var useLocalStorage = true;
 
 var LocalStorageDataProvider = function () {
 };
@@ -265,3 +305,11 @@ DAL.prototype.get_lists = function (callback) {
 };
 
 let data_context = new DAL();
+
+class FansAppeal {
+    constructor(body, date, time) {
+        this.body = body || '';
+        this.date = date || '';
+        this.time = time || '';
+    }
+}

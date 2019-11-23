@@ -1,3 +1,34 @@
+const DOMAIN = 'http://localhost:3000/';
+
+window.addEventListener('online', function (event) {
+    data_context.get_lists(function (result) {
+        listsArr = result;
+        console.log(listsArr);
+
+        if (listsArr != undefined) {
+            if (useLocalStorage == true) {
+                let len = listsArr.length;
+                for (let i = 0; i < len; i++) {
+                    let info_obj = localStorage.getItem('news_info' + i);
+                    let info_array = JSON.parse(info_obj);
+
+                    let result = [];
+
+                    for (let i in info_array)
+                        result.push(info_array [i]);
+                    let news = new News(result[0], result[1], result[2]);
+                    sendToServer('news', news);
+                }
+                localStorage.clear();
+            } else {
+                let news = new News(result[0], result[1], result[2]);
+                sendToServer('news', news);
+            }
+        }
+
+    });
+});
+
 if (document.getElementById("myImg") != null) {
     document.getElementById("myImg").remove();
 }
@@ -72,19 +103,25 @@ function checking() {
     return true;
 }
 
-function removeContent() {
-    if (document.getElementById("myImg") != null) {
-        document.getElementById("myImg").remove();
+function openIndexedDB(){
+
+    var openRequest = indexedDB.open('newsDatabase', 4);
+
+    openRequest.onupgradeneeded = function(event) {
+        console.log("Upgrading...");
+        var db = event.target.result;
+        db.createObjectStore("news_info");
     }
 
-    let old_image = document.createElement("img");
-    old_image.setAttribute("id", "old-image");
-    old_image.setAttribute("src", "images/add_image.png");
-    let addimg = document.getElementById("add-image");
-    addimg.appendChild(old_image);
+    openRequest.onsuccess = function(event) {
+        console.log("Success!");
+        db = event.target.result;
+    }
 
-    document.getElementById("title-input").value = "";
-    document.getElementById("body-input").value = "";
+    openRequest.onerror = function(event) {
+        console.log("Error");
+    }
+
 }
 
 function isOnline() {
@@ -97,12 +134,22 @@ function localSt() {
         return;
     } else {
         if (isOnline()) {
-            sendToServer();
+            sendToServer('news', readInfo());
+            addSingleElement2(readInfo());
             removeContent();
         } else {
             addToLocalStorage();
         }
     }
+}
+
+function readInfo() {
+    let title_input = document.getElementById("title-input").value;
+    let body_input = document.getElementById("body-input").value;
+    let bannerImage = document.getElementById('myImg');
+    let imgData = getBase64Image(bannerImage);
+    let news = new News(title_input, body_input, imgData);
+    return news;
 }
 
 function addToLocalStorage() {
@@ -129,6 +176,30 @@ function addToLocalStorage() {
     removeContent();
 }
 
+function pageLoad() {
+    getFromServer('news',
+        appeals => appeals.map(addSingleElement2));
+}
+
+function sendToServer(key, data, del=true) {
+    if (data.body) {
+        let req = new XMLHttpRequest();
+        req.open("POST", DOMAIN + key, true);
+        req.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        req.onreadystatechange = console.log;
+        req.send(JSON.stringify(data));
+    }
+    if (!del) return;
+}
+
+function getFromServer(key, callback) {
+    let req = new XMLHttpRequest();
+    req.responseType = 'json';
+    req.open('GET', DOMAIN+key, true);
+    req.onload  = () => req.status === 200 ? callback(req.response) : console.log(req.response);
+    req.send(null);
+}
+
 function addElementToPage(i) {
     if (useLocalStorage == true) {
         let info_obj = localStorage.getItem(i);
@@ -136,7 +207,7 @@ function addElementToPage(i) {
         let result = [];
 
         for (let n in info_array)
-            result.push([info_array [n]]);
+            result.push(info_array [n]);
         addSingleElement(result[0], result[1], result[2]);
     } else {
         data_context.get_lists(function (result) {
@@ -170,59 +241,39 @@ function addSingleElement(title, body, img) {
     col_md_first.appendChild(my_img);
     col_md_first.appendChild(title_k);
     col_md_first.appendChild(body_input);
-    element.appendChild(col_md_first);
+    if (element != null) {element.appendChild(col_md_first);}
 }
 
-function sendToServer() {
+function addSingleElement2(news) {
 
+    let title_k = document.createElement("h3");
+    let title_r = document.createTextNode(news.title);
+    title_k.appendChild(title_r);
+
+    let body_input = document.createElement("p");
+    let body_r = document.createTextNode(news.body);
+    body_input.appendChild(body_r);
+
+    let my_img = document.createElement("img");
+    my_img.setAttribute("src", "data:image/png;base64, "+ news.url);
+    my_img.setAttribute("alt", "News Image");
+
+    let element = document.querySelector(".additional-news");
+    let col_md_first = document.createElement("div");
+    col_md_first.setAttribute("class", "col-md-4 single-news");
+    let col_md_second = document.createElement("div");
+    col_md_second.setAttribute("class", "col-md-4 single-news");
+    let col_md_third = document.createElement("div");
+    col_md_third.setAttribute("class", "col-md-4 single-news");
+    col_md_first.appendChild(my_img);
+    col_md_first.appendChild(title_k);
+    col_md_first.appendChild(body_input);
+    if (element != null) {element.appendChild(col_md_first);}
 }
 
 document.addEventListener("DOMContentLoaded", openIndexedDB, false);
 
-window.addEventListener('offline', function (event) {
-    data_context.get_lists(function (result) {
-        listsArr = result;
-        if (listsArr != undefined) {
-            let len = listsArr.length;
-
-            for (let i = 0; i < len; i++) {
-                let info_obj = localStorage.getItem('news_info' + i);
-                let info_array = JSON.parse(info_obj);
-
-                let result = [];
-
-                for (let i in info_array)
-                    result.push([info_array [i]]);
-            }
-        }
-
-    });
-    //sendToServer();
-});
-
 let db;
-
-function openIndexedDB(){
-
-    var openRequest = indexedDB.open('newsDatabase', 4);
-
-    openRequest.onupgradeneeded = function(event) {
-        console.log("Upgrading...");
-        var db = event.target.result;
-        db.createObjectStore("news_info");
-    }
-
-    openRequest.onsuccess = function(event) {
-        console.log("Success!");
-        db = event.target.result;
-        init();
-    }
-
-    openRequest.onerror = function(event) {
-        console.log("Error");
-    }
-
-}
 
 var listsArr = [];
 
@@ -245,7 +296,7 @@ function init() {
     });
 }
 
-var useLocalStorage = false;
+var useLocalStorage = true;
 
 var LocalStorageDataProvider = function () {
 };
@@ -333,3 +384,26 @@ DAL.prototype.get_lists = function (callback) {
 };
 
 let data_context = new DAL();
+
+function removeContent() {
+    if (document.getElementById("myImg") != null) {
+        document.getElementById("myImg").remove();
+    }
+
+    let old_image = document.createElement("img");
+    old_image.setAttribute("id", "old-image");
+    old_image.setAttribute("src", "images/add_image.png");
+    let addimg = document.getElementById("add-image");
+    addimg.appendChild(old_image);
+
+    document.getElementById("title-input").value = "";
+    document.getElementById("body-input").value = "";
+}
+
+class News {
+    constructor(title, body, url) {
+        this.title = title || 'Title';
+        this.body = body || 'Body';
+        this.url = url || '/images/preview.png';
+    }
+}
