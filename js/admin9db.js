@@ -111,32 +111,39 @@ function addToLocalStorage() {
     let bannerImage = document.getElementById('myImg');
     let imgData = getBase64Image(bannerImage);
     let info_array = [title_input, body_input, imgData];
-    data_context.get_lists(function (result) {
-        listsArr = result;
-    });
-    let len = listsArr.length;
-    let myKey = 'news_info' + len;
+    if (useLocalStorage == true) {
+        data_context.get_lists(function (result) {
+            listsArr = result;
+            console.log(listsArr);
+        });
+        let len = listsArr.length;
+        let myKey = 'news_info' + len;
 
-    data_context.add_object(myKey, info_array);
-
-    addElementToPage(myKey);
+        data_context.add_object(myKey, info_array);
+        addElementToPage(myKey);
+    } else {
+        let myKey = "key";
+        data_context.add_object(myKey, info_array);
+        addElementToPage(myKey);
+    }
     removeContent();
 }
 
-function pageLoad() {
-
-}
-
 function addElementToPage(i) {
-    let info_obj = localStorage.getItem(i);
-    let info_array = JSON.parse(info_obj);
+    if (useLocalStorage == true) {
+        let info_obj = localStorage.getItem(i);
+        let info_array = JSON.parse(info_obj);
+        let result = [];
 
-    let result = [];
-
-    for (let n in info_array)
-        result.push([info_array [n]]);
-
-    addSingleElement(result[0], result[1], result[2]);
+        for (let n in info_array)
+            result.push([info_array [n]]);
+        addSingleElement(result[0], result[1], result[2]);
+    } else {
+        data_context.get_lists(function (result) {
+            listsArr = result;
+            addSingleElement(result[0], result[1], result[2]);
+        });
+    }
 }
 
 function addSingleElement(title, body, img) {
@@ -172,20 +179,23 @@ function sendToServer() {
 
 document.addEventListener("DOMContentLoaded", openIndexedDB, false);
 
-window.addEventListener('offline', function(event){
+window.addEventListener('offline', function (event) {
     data_context.get_lists(function (result) {
         listsArr = result;
-        let len = listsArr.length;
+        if (listsArr != undefined) {
+            let len = listsArr.length;
 
-        for (let i = 0; i < len; i++ ) {
-            let info_obj = localStorage.getItem('news_info' + i);
-            let info_array = JSON.parse(info_obj);
+            for (let i = 0; i < len; i++) {
+                let info_obj = localStorage.getItem('news_info' + i);
+                let info_array = JSON.parse(info_obj);
 
-            let result = [];
+                let result = [];
 
-            for (let i in info_array)
-                result.push([info_array [i]]);
+                for (let i in info_array)
+                    result.push([info_array [i]]);
+            }
         }
+
     });
     //sendToServer();
 });
@@ -194,12 +204,12 @@ let db;
 
 function openIndexedDB(){
 
-    var openRequest = indexedDB.open('bandDatabase', 4);
+    var openRequest = indexedDB.open('newsDatabase', 4);
 
     openRequest.onupgradeneeded = function(event) {
         console.log("Upgrading...");
         var db = event.target.result;
-        var objectStore = db.createObjectStore("appeal_info", {keyPath: "title"});
+        db.createObjectStore("news_info");
     }
 
     openRequest.onsuccess = function(event) {
@@ -219,47 +229,93 @@ var listsArr = [];
 function init() {
     data_context.get_lists(function (result) {
         listsArr = result;
-        let len = listsArr.length;
-        console.log(listsArr);
+        if (listsArr != undefined) {
+            let len = listsArr.length;
+            console.log(listsArr);
+            if (useLocalStorage == true) {
+                for (let i = 0; i < len; i++) {
+                    addElementToPage('news_info' + i);
+                }
+            } else {
+                addElementToPage(len);
+            }
 
-        for (let i = 0; i < len; i++ ) {
-            addElementToPage('news_info' + i);
         }
+
     });
 }
 
-var useLocalStorage = true;
+var useLocalStorage = false;
 
-var LocalStorageDataProvider = function(){};
+var LocalStorageDataProvider = function () {
+};
 
-LocalStorageDataProvider.prototype.add_object = function(key, value) {
+LocalStorageDataProvider.prototype.add_object = function (key, value) {
     localStorage[key] = JSON.stringify(value);
 };
 
-LocalStorageDataProvider.prototype.get_lists = function(callback) {
+LocalStorageDataProvider.prototype.get_lists = function (callback) {
     var arr = [],
         i;
 
     for (i = 0; i < localStorage.length; i++) {
         var listItem = localStorage.key(i);
-        if(listItem) {
+        if (listItem) {
             arr.push(listItem);
         }
     }
     callback(arr);
 };
 
-var IndexedDBDataProvider = function(){};
+var IndexedDBDataProvider = function () {
+};
 
-IndexedDBDataProvider.prototype.add_object = function(key, value) {
+
+IndexedDBDataProvider.prototype.add_object = function (myKey, info_array) {
+    var transaction = db.transaction(["news_info"], "readwrite");
+
+    transaction.oncomplete = function (event) {
+        console.log("Transaction complete");
+    };
+
+    transaction.onerror = function (event) {
+        console.log("Error");
+    };
+
+    var objectStore = transaction.objectStore("news_info");
+    var objectStoreRequest = objectStore.add(info_array, "news_info");
+
+    objectStoreRequest.onsuccess = function (event) {
+        console.log("Added to object store");
+    };
+};
+
+IndexedDBDataProvider.prototype.get_lists = function (callback) {
+    var transaction = db.transaction(["news_info"], "readwrite");
+
+    transaction.oncomplete = function (event) {
+        console.log("Transaction complete");
+    };
+
+    transaction.onerror = function (event) {
+        console.log("Error");
+    };
+
+    var objectStore = transaction.objectStore("news_info");
+
+    // Make a request to get a record by key from the object store
+    var objectStoreRequest = objectStore.get("news_info");
+
+    objectStoreRequest.onsuccess = function (event) {
+        console.log("Got!");
+        var myRecord = objectStoreRequest.result;
+        console.log(myRecord);
+        callback(myRecord);
+    };
 
 };
 
-IndexedDBDataProvider.prototype.get_lists = function(callback) {
-
-};
-
-var DAL = function(){
+var DAL = function () {
     //var useLocalStorage = false;
     !window.indexedDB;
     if (useLocalStorage) {
@@ -269,10 +325,10 @@ var DAL = function(){
     }
 };
 
-DAL.prototype.add_object = function(key, element) {
-    this.data_provider.add_object(key, element);
+DAL.prototype.add_object = function (myKey, info_array) {
+    this.data_provider.add_object(myKey, info_array);
 };
-DAL.prototype.get_lists = function(callback) {
+DAL.prototype.get_lists = function (callback) {
     return this.data_provider.get_lists(callback);
 };
 

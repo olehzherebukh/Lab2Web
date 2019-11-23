@@ -1,0 +1,25 @@
+CACHE MANIFEST
+# v1.0.1 2019-10-12
+
+CACHE:
+main.html
+news.html
+tourschedule.html
+fansappeal.html
+admin.html
+style.css
+concertvenue.html
+images/ReturnToForever.jpg
+images/Scorpions_Logo1.jpg
+images/ScorpionsBand.jpg
+images/Scorpions_band_wide.jpg
+images/add_image.png
+images/tourimage.jpg
+images/news_picture.jpg
+http://localhost:63342/favicon.ico
+
+NETWORK:
+*
+
+FALLBACK:
+concertvenue.html error.html
